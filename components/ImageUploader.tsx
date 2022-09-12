@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { FormState } from 'react-hook-form';
 import { auth, storage, STATE_CHANGED } from '../lib/firebase';
 import Loader from './Loader';
 
@@ -11,7 +12,7 @@ export default function ImageUploader(){
     // Create firebase upload task
     const uploadFile = async (e) => {
         // Get the file
-        const file = Array.from(e.target.files)[0];
+        const file = Array.from((e.target as HTMLInputElement).files)[0];
         const extension = file.type.split('/')[1];
 
         // Makes reference to the storage bucket location
@@ -24,8 +25,8 @@ export default function ImageUploader(){
 
         // Listen to updates on the upload task
         task.on(STATE_CHANGED, (snapshot) => {
-            const pct = ((snapshot.bytesTransferred / snapshot.totalBytes) * 100).toFixed(0);
-            setProgress(pct);
+            const pct = (((snapshot.bytesTransferred as number) / (snapshot.totalBytes as number)) * 100).toFixed(0);
+            setProgress(Number(pct));
 
             // Get downloadURL AFTER task resolves (Note: this is not a native Promise)
             task

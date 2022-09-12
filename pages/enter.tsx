@@ -61,7 +61,7 @@ function UsernameForm(){
 
   const onChange = (e) => {
     // Force value to match required format
-    const val = e.target.value.toLowerCase();
+    const val:string = e.target.value.toLowerCase();
     const re = /^(?=[a-zA-Z0-9._]{3,15}$)(?!.*[_.]{2})[^_.].*[^_.]$/;
 
     // Only set value if less than 3 or matches regex
@@ -79,7 +79,7 @@ function UsernameForm(){
   };
 
   // Hit database to validate the username
-  const checkUsername = useCallback(debounce(async (username) => {
+  const checkUsername = useCallback(debounce(async (username:string) => {
     if(username.length >= 3){
       const ref = firestore.doc(`usernames/${username}`);
       const {exists} = await ref.get();
@@ -113,7 +113,7 @@ function UsernameForm(){
     )
   );
 }
-
+ 
 function UsernameMessage({ username, isValid, loading }) {
   if (loading) {
     return <p>Checking...</p>;

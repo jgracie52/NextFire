@@ -52,7 +52,7 @@ function CreateNewPost(){
   // Create new post in firestore
   const createPost = async (e) => {
     e.preventDefault();
-    const uid = auth.currentUser.uid;
+    const uid:string = auth.currentUser.uid;
     const ref = firestore.collection('users').doc(uid).collection('posts').doc(slug);
 
     // Tip: give all fields a default value here

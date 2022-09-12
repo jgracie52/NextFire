@@ -9,7 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "firebase": "^9.9.2",
+    "firebase": "^9.9.4",
     "lodash.debounce": "^4.0.8",
     "lodash.kebabcase": "^4.1.1",
     "next": "12.2.4",

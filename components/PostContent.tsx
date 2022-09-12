@@ -1,6 +1,5 @@
 import Link from 'next/link';
 import ReactMarkdown from 'react-markdown';
-import { dateToString } from '../lib/firebase';
 
 // UI component for main post content
 export default function PostContent({ post }) {

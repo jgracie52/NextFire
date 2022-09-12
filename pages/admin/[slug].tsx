@@ -91,7 +91,7 @@ function PostForm({ defaultValues, postRef, preview }){
           <label>Published</label>
         </fieldset>
 
-        {errors.content && <p className="text-danger">{errors.content.message}</p>}
+        {errors.content && <p className="text-danger">{errors.content.message.toString()}</p>}
 
         <button type="submit" className="btn-green" disabled={!isDirty || ! isValid}>
           Save Changes
