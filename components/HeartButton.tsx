@@ -24,7 +24,7 @@ export default function Heart({ postRef }){
         const batch = firestore.batch();
 
         batch.update(postRef, { heartCount: increment(-1) });
-        batch.delete(heartRef, { uid });
+        batch.delete(heartRef);
 
         await batch.commit();
     }
