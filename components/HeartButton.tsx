@@ -1,10 +1,11 @@
 import { firestore, auth, increment } from '../lib/firebase';
 import { useDocument } from 'react-firebase-hooks/firestore';
+import { DocumentReference } from '@firebase/firestore-types'
 
 // Allows a user to heart or like a post
 export default function Heart({ postRef }){
     // Listen to heart doc for currently logged in user
-    const heartRef = postRef.collection('hearts').doc(auth.currentUser.uid);
+    const heartRef:DocumentReference = postRef.collection('hearts').doc(auth.currentUser.uid);
     const [heartDoc] = useDocument(heartRef);
 
     // Create a user-to-post relationship
@@ -29,7 +30,7 @@ export default function Heart({ postRef }){
         await batch.commit();
     }
 
-    return heartDoc?.exists() ? (
+    return heartDoc?.exists ? (
         <button onClick={removeHeart}>💔 Unheart</button>
       ) : (
         <button onClick={addHeart}>💗 Heart</button>
