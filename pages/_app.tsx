@@ -17,6 +17,7 @@ const MainLinks:HeaderActionProps = {
     {
       link: '/about',
       label: 'Our Story',
+      links: []
     },
     {
       link: '/learn',
@@ -34,11 +35,13 @@ const MainLinks:HeaderActionProps = {
     },
     {
       link: '/admin',
-      label: 'Write'
+      label: 'Write',
+      links: []
     },
     {
       link: '/help',
-      label: 'Help'
+      label: 'Help',
+      links: []
     }
 ]
 }

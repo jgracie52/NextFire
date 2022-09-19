@@ -82,7 +82,7 @@ import Link from 'next/link';
         <Menu.Item key={item.link}>{item.label}</Menu.Item>
       ));
   
-      if (menuItems) {
+      if (menuItems && menuItems.length) {
         return (
           <Menu key={link.label} trigger="hover" exitTransitionDuration={0}>
             <Menu.Target>
