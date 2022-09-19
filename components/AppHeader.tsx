@@ -21,6 +21,7 @@ import {
   import { useContext } from 'react';
   import { UserContext } from '../lib/context'
 import UserHeaderButton from './UserHeaderButton';
+import Link from 'next/link';
   
   const HEADER_HEIGHT = 60;
   
@@ -117,9 +118,9 @@ import UserHeaderButton from './UserHeaderButton';
         <Container className={classes.inner} fluid>
           <Group>
             <Burger opened={opened} onClick={toggle} className={classes.burger} size="sm" />
-            <a href="/">
+            <Link href="/">
                 <Image src={'/logo-no-background.svg'} height={50}/>
-            </a>
+            </Link>
           </Group>
           <Group spacing={5} className={classes.links}>
             {items}

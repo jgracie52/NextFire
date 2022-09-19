@@ -18,7 +18,7 @@ function PostItem({ post, admin = false }) {
   const minutesToRead = (wordCount / 100 + 1).toFixed(0);
 
   const articleCardProps:ArticleCardProps = {
-    image: null,
+    image: post.coverImageURL,
     link: `/${admin ? 'admin' : post.username}/${post.slug}`,
     description: post.content,
     title: post.title,

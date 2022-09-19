@@ -115,10 +115,10 @@ function PostManager(){
                   </details>
                   </li>
                   <li>
-                  Embed rich content such as Tweets, YouTube videos, etc. Use the complete URL. See a list of supported embeds.
+                  {"Embed rich content such as Tweets, YouTube videos, etc. Use the complete URL. See a list of supported embeds."}
                   </li>
                   <li>
-                  In addition to images for the post's content, you can also drag and drop a cover image.
+                  {"In addition to images for the post\'s content, you can also drag and drop a cover image."}
                   </li>
                 </ul>
             </>}
