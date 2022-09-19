@@ -6,6 +6,7 @@ import toast from 'react-hot-toast'
 import { firestore, postToJSON, fromMillis } from '../lib/firebase'
 import { useState } from 'react'
 import PostFeed from '../components/PostFeed'
+import { Button, Text } from '@mantine/core'
 
 const LIMIT = 10;
 
@@ -52,14 +53,14 @@ export default function Home(props) {
   }
 
   return (
-    <main>
+    <main className='main-post-div'>
       <PostFeed posts={posts} admin={false}></PostFeed>
 
-      {!loading && !postsEnd && <button onClick={getMorePosts}>Load More</button>}
+      {!postsEnd && <Button radius="xl" sx={{ height: 30, marginTop: 15, alignSelf: 'center', justifySelf: 'center'}} onClick={getMorePosts} loading={loading}>Load More</Button>}
 
-      <Loader show={loading}></Loader>
+      {/* <Loader show={loading}></Loader> */}
 
-      {postsEnd && 'You have reached the end!'}
+      {postsEnd && <Text sx={{ height: 30, marginTop: 15, alignSelf: 'center', justifySelf: 'center'}}>You have reached the end!</Text>}
     </main>
   )
 }

@@ -1,7 +1,19 @@
 import { auth, firestore, googleAuthProvider } from "../lib/firebase";
 import { useContext, useEffect, useState, useCallback } from "react";
+import { DiscordIcon, TwitterIcon } from '@mantine/ds';
 import { UserContext } from "../lib/context";
 import debounce from 'lodash.debounce';
+import {
+  Anchor,
+  Paper,
+  Title,
+  Text,
+  Container,
+  Button,
+  Image
+} from '@mantine/core';
+import { FacebookButton, GoogleButton } from "../components/SocialButtons";
+import { ThemeContext, withTheme } from "@emotion/react";
 
 export default function Page({ }) {
   const { user, username } = useContext(UserContext)
@@ -23,9 +35,48 @@ function SignInButton(){
     await auth.signInWithPopup(googleAuthProvider);
   }
   return (
-    <button className="btn-google" onClick={signInWithGoogle}>
-      <img src={"/google.png"}></img> Sign In With Google
-    </button>
+    <Container size={420} my={40}>
+      <Title
+        align="center"
+        sx={(theme) => ({ fontFamily: `Greycliff CF, ${theme.fontFamily}`, fontWeight: 900 })}
+      >
+        Welcome back!
+      </Title>
+      <Text color="dimmed" size="sm" align="center" mt={5}>
+        Do not have an account yet?{' '}
+        <Text size="sm" gradient={{ from: 'red', to: 'pink', deg: 45 }} variant="gradient">
+          Create account
+        </Text>
+      </Text>
+
+      <Paper withBorder className="sign-in-container" shadow="md" p={30} mt={30} radius="md">
+        <Button className="signin-btn" variant="default" color="gray" onClick={signInWithGoogle}><Image src='/google.png' width={30}/> Continue with Google</Button>
+           <Button className="signin-btn"
+              sx={(theme) => ({
+                backgroundColor: '#4a6ea8',
+                color: '#fff',
+                '&:hover': {
+                  backgroundColor: theme.fn.darken('#4267B2', 0.1),
+                },
+              })}
+              ><Image src='/facebook.svg' width={30} /> Signin with Facebook</Button>
+              <Button className="signin-btn"
+              component="a"
+              variant="default"
+            ><TwitterIcon size={25} color="#00ACEE" /> Follow with Twitter</Button>
+            <Button className="signin-btn"
+            sx={(theme) => ({
+              backgroundColor: theme.colorScheme === 'dark' ? '#5865F2' : '#5865F2',
+              '&:hover': {
+                backgroundColor:
+                  theme.colorScheme === 'dark'
+                    ? theme.fn.lighten('#5865F2', 0.05)
+                    : theme.fn.darken('#5865F2', 0.05),
+              },
+            })}
+          ><DiscordIcon size={25} /> Join with Discord</Button>
+      </Paper>
+  </Container>
   );
 }
 

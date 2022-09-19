@@ -10,6 +10,10 @@ import { useRouter } from 'next/router';
 import { useCollection } from 'react-firebase-hooks/firestore';
 import kebabCase from 'lodash.kebabcase';
 import toast from 'react-hot-toast';
+import { Button, Modal, Grid, Center, Box, Text, Progress, Group, Input, TextInput, useMantineTheme } from '@mantine/core';
+import { IconCheck, IconX } from '@tabler/icons';
+import { useInputState } from '@mantine/hooks';
+import FormRequirement from '../../components/FormRequirement';
 
 
 export default function AdminPostsPage({ }) {
@@ -17,7 +21,6 @@ export default function AdminPostsPage({ }) {
     <main>
       <AuthCheck>
         <PostList></PostList>
-        <CreateNewPost></CreateNewPost>
       </AuthCheck>
     </main>
   )
@@ -27,21 +30,33 @@ function PostList(){
   const ref = firestore.collection('users').doc(auth.currentUser.uid).collection('posts');
   const query = ref.orderBy('createdAt');
   const [querySnapshot] = useCollection(query);
+  const [newPost, newPostToggle] = useState(false);
 
   const posts = querySnapshot?.docs.map((doc) => doc.data());
 
   return(
     <>
-      <h1>Manage your Posts</h1>
+      <Grid>
+        <Grid.Col xs={10}>
+          <h1>Manage your Posts</h1>
+        </Grid.Col>
+        <Grid.Col xs={2} sx={{display:'flex', justifyContent:'flex-end'}}>
+          <Button radius="xl" sx={{ height: 30, alignSelf:'center', justifySelf:'flex-end' }} onClick={() => newPostToggle(true)}>
+                      Create Post
+          </Button>
+        </Grid.Col>
+      </Grid>
       <PostFeed posts={posts} admin={true}></PostFeed>
+      <CreateNewPost display={newPost} setDisplay={newPostToggle}></CreateNewPost>
     </>
   );
 }
 
-function CreateNewPost(){
+function CreateNewPost({display, setDisplay}){
   const router = useRouter();
   const {username} = useContext(UserContext);
   const [title, setTitle] = useState('');
+  const theme = useMantineTheme();
 
   // ensure slug is URL safe
   const slug = encodeURI(kebabCase(title));
@@ -77,17 +92,48 @@ function CreateNewPost(){
   }
 
   return(
-    <form onSubmit={createPost}>
-      <input value={title} onChange={(e) => setTitle(e.target.value)} placeholder="My Awesome Article!" className={styles.input}/>
-      <p>
-        <strong>Slug:</strong> {slug}
-      </p>
-      <button
-        type='submit'
-        disabled={!isValid}
-        className='btn-green'>
-          Create New Post
-        </button>
-    </form>
+    <Modal
+        opened={display}
+        onClose={() => setDisplay(false)}
+        title="Create New Post"
+        overlayColor={theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.colors.gray[2]}
+        overlayOpacity={0.55}
+        overlayBlur={3}
+      >
+          <form onSubmit={createPost}>
+            <TitleCheck value={title} valueChanged={setTitle} slug={slug}></TitleCheck>
+            <Group position="right" mt="md">
+              <Button
+                type='submit'
+                disabled={!isValid}
+                >
+                  Create New Post
+              </Button>
+            </Group>
+          </form>
+    </Modal>
+  );
+}
+
+export function TitleCheck({value, valueChanged, slug}) {
+  return (
+    <div>
+      <TextInput
+        value={value}
+        onChange={(e) => valueChanged(e.target.value)}
+        placeholder="Your Awesome Article"
+        label="Article Title"
+        required
+      />
+
+      <FormRequirement label="Has at least 3 characters" meets={value.length > 3} />
+      <FormRequirement label="Has less than 100 characters" meets={value.length < 100} />
+      <Text color={'black'} mt={5} size="sm">
+              <Center inline>
+                <strong>Slug:</strong>
+                <Box ml={7}>{slug}</Box>
+              </Center>
+      </Text>
+    </div>
   );
 }
