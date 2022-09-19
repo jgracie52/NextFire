@@ -6,13 +6,13 @@ export default function PostFeed({ posts, admin }) {
   return (
     <> 
       <Grid>
-        {posts ? posts.map((post) => <Grid.Col xs={4}><PostItem post={post} key={post.slug} admin={admin} /></Grid.Col>) : null}
+        {posts ? posts.map((post) => <Grid.Col xs={4}><PostItem post={post} admin={admin} /></Grid.Col>) : null}
       </Grid>
     </>
     );
 }
 
-function PostItem({ post, admin = false, key}) {
+function PostItem({ post, admin = false}) {
   // Naive method to calc word count and read time
   const wordCount = post?.content.trim().split(/\s+/g).length;
   const minutesToRead = (wordCount / 100 + 1).toFixed(0);
