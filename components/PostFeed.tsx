@@ -6,7 +6,7 @@ export default function PostFeed({ posts, admin }) {
   return (
     <> 
       <Grid>
-        {posts ? posts.map((post) => <Grid.Col xs={4}><PostItem post={post} admin={admin} /></Grid.Col>) : null}
+        {posts ? posts.map((post) => <Grid.Col xs={4} key={post.slug}><PostItem post={post} admin={admin} /></Grid.Col>) : null}
       </Grid>
     </>
     );
